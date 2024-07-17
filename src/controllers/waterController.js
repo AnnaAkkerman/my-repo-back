@@ -40,23 +40,23 @@ const deleteWaterVolumeController = async (req, res, next) => {
 const getDailyWaterVolumeController = async (req, res) => {
     const { day, month, year } = req.params;
     const dailyItems = await Services.water.getDailyWaterVolume(req.user._id, { day, month, year });
-    const totalVolume = dailyItems.reduce((total, item) => total + item.volume, 0);
+    // const totalVolume = dailyItems.reduce((total, item) => total + item.volume, 0);
     
     
-    res.json(ResponseMaker(200, 'Successfully get a daily water volume!', {dailyItems,totalVolume}));
+    res.json(ResponseMaker(200, 'Successfully get a daily water volume!', dailyItems));
 };
  
 
-const getMonthlyWaterVolumeController = async (req, res,next) => {
+const getMonthlyWaterVolumeController = async (req, res) => {
         const { month, year } = req.params;
         const monthInt = parseInt(month);
         const yearInt = parseInt(year);
 
         const volumeRecords = await Services.water.getMonthlyWaterVolume(req.user._id, { month: monthInt, year: yearInt });
 
-        if (!volumeRecords || volumeRecords.length === 0) {
-            return next(HttpError(404, 'No records found for the specified month and year'));
-        }
+        // if (!volumeRecords || volumeRecords.length === 0) {
+        //     return next(HttpError(404, 'No records found for the specified month and year'));
+        // }
 
         const dailyVolumes = {};
         volumeRecords.forEach(record => {
